@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sasta Notepad</title>
+	<style type="text/css">
+		h1 {
+			color: whitesmoke;
+		}
+		body {
+			background: #4E4C46;
+		}
+		div {
+		    background: white;
+		    font-family: sans-serif;
+		    padding: 20px;
+		    text-align: left;
+		    border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<h1>Sasta Notepad</h1>
+		<div id="filecontent" contenteditable>This is an editable paragraph.</div>
+	</center>
+
+<button onclick="copyToClip()">Copy</button>
+<button onclick="clear_editor()">Clear Editor</button>
+<input type="file" id="upload" value="Open File">
+<script type="text/javascript">
+document.getElementById('upload').addEventListener('change', readFileAsString)
+function copyToClip() {
+	var pad = document.getElementsByTagName('div').innerText;
+    function listener(e) {
+        e.clipboardData.setData("text/html", pad);
+        e.clipboardData.setData("text/plain", pad);
+        e.preventDefault();
+    }
+    document.addEventListener("copy", listener);
+    document.execCommand("copy");
+    document.removeEventListener("copy", listener);
+    alert('Copied');
+}
+function readFileAsString() {
+	var files = this.files;
+	if (files.length === 0) {
+		console.log('No file is selected');
+		alert("Please Select A File");
+		return;
+	}
+	var filediv = document.getElementById('filecontent');
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		console.log(event.target.result.length);
+		filediv.innerText = event.target.result;
+	};
+	let newdiv = document.createElement("div");
+	let body = document.getElementsByName("body")[0];
+
+	body.parentNode.insertBefore(newdiv, body.nextSibling);
+	reader.readAsText(files[0]);
+}
+function clear_editor () {
+	var filediv = document.getElementById('filecontent');
+	filediv.innerHTML = "";
+}
+</script>
+</body>
+</html>
