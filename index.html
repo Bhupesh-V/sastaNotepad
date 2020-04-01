@@ -54,10 +54,6 @@ function readFileAsString() {
 		console.log(event.target.result.length);
 		filediv.innerText = event.target.result;
 	};
-	let newdiv = document.createElement("div");
-	let body = document.getElementsByName("body")[0];
-
-	body.parentNode.insertBefore(newdiv, body.nextSibling);
 	reader.readAsText(files[0]);
 }
 function clear_editor () {
